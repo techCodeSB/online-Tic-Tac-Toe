@@ -1,0 +1,255 @@
+<!-- ######################################################### -->
+<!-- ##    the game by souravbishia this is my own logic    ## -->
+<!-- ##      copyright Sourav Bishai | Production 2022      ## -->
+<!-- ######################################################### -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Tic-Tac-Toe</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		body {
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			/*background: linear-gradient(to bottom, violet, purple);*/
+
+		}
+
+		.back {
+			background-image: url("back.jpg");
+			width: 100vw;
+			height: 100vh;
+			position: absolute;
+			opacity: 0.1;
+			z-index: -1;
+		}
+
+		table {
+			box-shadow: 0px 0px 5px lightgrey;
+			width: 35vw;
+			text-align: center;
+			height: 75vh;
+			padding: 5px;
+			background: linear-gradient(to right, purple, orange);
+			color: white;
+			border-radius: 3px;
+		}
+
+		td {
+			border-bottom: 2px solid white;
+			border-left: 2px solid white;
+			cursor: pointer;
+			/* font-family: arial; */
+			font-family: "Bradley Hand ITC";
+			font-size: 40px;
+			font-weight: bold;
+		}
+/* Bradley Hand ITC - x */
+/* Copperplate Gothic Light - 0 */
+		td:first-child {
+			border-left: none;
+		}
+
+		.hadding {
+			/*height is assign but height is never work*/
+			height: 10px;
+			padding: 10px 20px;
+			border: 1px solid white;
+			border-radius: 30px;
+			font-family: arial;
+			font-size: 18px;
+		}
+		#haddingtext{
+			font-size: 30px;
+		}
+		footer {
+			color: #222;
+			font-family: arial;
+			font-size: 12px;
+			margin-bottom: -60px;
+		}
+		.dot_icon{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			float: right;
+			font-size: 25px;
+			width: 40px;
+			height: 40px;
+			background-color: rgb(173, 62, 173);
+			border-radius: 100%;
+		}
+		.dot_icon:hover{background-color: rgb(138, 27, 138);}
+		.dot_icon:active{background-color: rgb(173, 62, 173);}
+
+		.optionbox{
+			position: absolute;
+			top: -300px;
+			width: 50vw;
+			height: 25vh;
+			background-color: rgb(125, 49, 145);
+			border-radius: 5px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 20px;
+			transition: 0.2s;
+			padding:20px 10px;
+		}
+		.optionbox .close{
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 30px;
+			height: 30px;
+			background-color: tomato;
+			color: white;
+			display: grid;
+			place-items: center;
+			font-size: 25px;
+			cursor: pointer;
+		}
+		input{
+			width: 30vw;
+			height: 40px;
+			padding: 0px 10px;
+			outline: none;
+			border: 1px solid purple;
+			border-radius: 5px;
+			cursor: text;
+		}
+		.create_input{
+			color: #222;
+			font-size: 16px;
+		}
+		button{
+			width: 140px;
+			height: 40px;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 14px;
+			background-color: rgb(43, 202, 43);
+			border:none;
+			outline: none;
+			font-weight: bold;
+			color: #222;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.error{
+			color: red;
+			font-size: 13px;
+			font-family: Arial, Helvetica, sans-serif;
+			padding:0px 10px;
+			display: none;
+		}
+		.join_mess{
+			position: absolute;
+			left: 10px;
+			top: 20px;
+			width: 300px;
+			height: 55px;
+			background-color: orange;
+			border-radius: 5px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 16px;
+			font-family: Arial, Helvetica, sans-serif;
+			padding-left: 10px;
+			display: none;
+		}
+		.join_mess .cross{
+			height: 100%;
+			width: 30px;
+			background-color: khaki;
+			display: grid;
+			place-items: center;
+			border-radius: 0px 5px 5px 0px;
+			font-size: 20px;
+			cursor: pointer;
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div class="join_mess">
+		<div class="mess"></div>
+		<div class="cross" onclick="this.parentElement.style.display='none'">
+			&Cross;
+		</div>
+	</div>
+
+	<div class="optionbox">
+		<div class="close" onclick="this.parentElement.style.marginTop='-200px'">&Cross;</div>
+
+		<div class="join">
+			<p class="error">Please enter your id...</p>
+			<input type="text" placeholder="Playground id...." class="join_input">
+			<button class="join_btn">Join Playground</button>
+		</div>
+		<div class="create">
+			<input type="text" class="create_input" disabled>
+			<button class="create_btn">Create Playground</button>
+		</div>
+	</div>
+
+	<table oncontextmenu="return false">
+		<tr id="haddingRow">
+			<td colspan="3" class="hadding">
+				<span id="haddingtext">Tic-Tac-Toe</span>
+				<span class="dot_icon" onclick="document.querySelector('.optionbox').style.marginTop='300px'">
+					&vellip;
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="one">?</td>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="two">?</td>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="three">?</td>
+		</tr>
+		<tr>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="four">?</td>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="five">?</td>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="six">?</td>
+		</tr>
+		<tr>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="seven" style="border-bottom: none;">?</td>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="eight" style="border-bottom: none;">?</td>
+			<td onclick="xFun(this.getAttribute('class'))" oncontextmenu="zeroFun(this.getAttribute('class'))" id="btn"
+				class="nine" style="border-bottom: none;">?</td>
+		</tr>
+	</table>
+	<div class="back"></div>
+	<footer>
+		<p>Copyright &copy; Sourav | Production 2022</p>
+	</footer>
+</body>
+
+</html>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<!-- <script src="http://2bd2-2409-4061-4e1d-bc71-9dae-6a53-37ae-356a.ngrok.io/socket.io/socket.io.js"></script> -->
+<script src="./random.js"></script>
+<script src="./index.js"></script>
+
+<!-- ######################################################### -->
+<!-- ##    the game by souravbishia this is my own logic    ## -->
+<!-- ##      Copyright Sourav Bishai | Production 2022      ## -->
+<!-- #########################################################
